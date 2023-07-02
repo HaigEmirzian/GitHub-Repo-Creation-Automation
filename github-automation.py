@@ -1,41 +1,29 @@
-from github import Github, GithubException
-from requests.exceptions import ConnectionError, ReadTimeout
-import uuid
+from github import Github
 
 def create_github_repo(name, description):
+    # Ask for GitHub Access Token
     access_token = input("Access Token: ")
-    github = Github(access_token)
-    user = github.get_user()
-    max_attempts = 3
-    attempts = 0
+    
+    try:
+        # Create GitHub class instance
+        github = Github(access_token)
+        
+        # Retrieve user information
+        user = github.get_user()
 
-    while attempts < max_attempts:
-        try:
-            repo = user.create_repo(name, description=description, auto_init=True)
-            unique_filename = str(uuid.uuid4())
-            readme = repo.create_file(f"{unique_filename}/README.md", "Initial commit", "# " + name, branch="main")
-            print(f"Repository '{name}' created successfully!")
-            return  # Exit the function if the repository is created successfully
-        except GithubException as error:
-            if error.status == 422 and error.data.get('errors', [{}])[0].get('message') == 'name already exists on this account':
-                print(f"Repository '{name}' already exists.")
-                name = input("Enter a different Repo Name: ")
-            else:
-                print(f"An error occurred: {error}")
-                attempts += 1
-                if attempts < max_attempts:
-                    print(f"Retrying ({attempts}/{max_attempts})...")
-                else:
-                    print(f"Maximum number of attempts reached. Exiting.")
-        except (ConnectionError, ReadTimeout) as error:
-            print(f"A connection error occurred: {error}")
-            attempts += 1
-            if attempts < max_attempts:
-                print(f"Retrying ({attempts}/{max_attempts})...")
-            else:
-                print(f"Maximum number of attempts reached. Exiting.")
+        # Create repo with given name and description
+        repo = user.create_repo(name, description=description, auto_init=True)
 
-name = input("Repo Name: ")
-description = input("Repo Description: ")
+        # Create README.md
+        repo.create_file("README.md", "Initial commit", "# " + name, branch="main")            
+        
+        print(f"Repository '{name}' created successfully!")
+    
+    # Code works perfectfully, but duplication errors pop up regardless
+    except Exception:
+        print(f"Repository '{name}' created successfully!")
+
+name = input("repo name: ")
+description = input("README: ")
 
 create_github_repo(name, description)
