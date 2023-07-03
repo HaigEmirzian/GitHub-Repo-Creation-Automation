@@ -19,7 +19,7 @@ def create_github_repo(name, description):
         
         print(f"Repository '{name}' created successfully!")
     
-    # Code works perfectfully, but duplication errors pop up regardless
+    # Code works perfectly, but duplication errors pop up regardless
     except Exception:
         print(f"Repository '{name}' created successfully!")
 
