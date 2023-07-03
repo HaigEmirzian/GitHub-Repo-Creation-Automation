@@ -1,9 +1,9 @@
 # Automatically Create A GitHub Repo
 
 
-* Automated the repository creation process by developing a Python script
+* Automated Comcast's repository creation process by developing a Python script
 that utilizes the GitHub API
-* Improved Comcast's repo creation efficiency by over 95% and ensured
+* Improved repo creation efficiency by over 95% and ensured
 a template-based structure
 * Script accesses the provided GitHub Access Token
 * The PyGithub library has wrapper functions for GitHub API utility
