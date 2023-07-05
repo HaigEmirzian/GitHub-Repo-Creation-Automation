@@ -1,15 +1,6 @@
 from github import Github
 import os
 
-'''
-Important Notes:
-
-1. Place script into the folder where you will be creating the new mkdocs folder
-Ex. Document/GitHub
-2. Make sure the name you provide replaces spaces with hyphens
-Ex. test repo -> test-repo
-'''
-
 def create_github_repo(name, description):
     # Ask for GitHub Access Token
     access_token = input("Access Token: ")
@@ -30,7 +21,18 @@ def create_github_repo(name, description):
         # Create .gitignore
         repo.create_file(".gitignore", "Initial commit", "#" + name, branch="main")
 
-        # Run mkdocs new "file-name" terminal command
+        # Enter the cloned repo to call mkdocs
+        os.chdir("..")
+
+        # Construct the repo URL
+        repo_url = f'https://github.com/{user.login}/{name}.git'
+
+        # Clone the repo
+        os.system(f'git clone {repo_url}')
+
+        os.chdir(name)
+        
+        # Run [mkdocs new file-name] terminal command
         os.system(f"mkdocs new {name}")
 
         # Instantiate docs path
@@ -51,15 +53,13 @@ def create_github_repo(name, description):
         changelog_path = f'{docs}/{changelog}'
         repo.create_file(changelog_path, "Initial commit", "", branch="main")
 
-
         print(f"Repository '{name}' created successfully!")
 
-        # Code works perfectly, but duplication errors pop up regardless
     except Exception:
         print(f"Repository '{name}' created successfully!")
 
 # Ask for repo name and description
-name = input("repo name: ")
+name = input("Repo name: ")
 description = input("README: ")
 
 # Call function
