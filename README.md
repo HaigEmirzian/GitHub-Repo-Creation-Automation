@@ -14,4 +14,4 @@ a template-based structure
 1. Run the script
 2. Enter repo name, README, and GitHub Access Token
 
-![Screenshot](https://github.com/HaigEmirzian/GitHub-Repo-Creation-Automation/blob/main/Screenshot.png)
+![screenshot](https://github.com/HaigEmirzian/GitHub-Repo-Creation-Automation/blob/main/screenshot.png)
